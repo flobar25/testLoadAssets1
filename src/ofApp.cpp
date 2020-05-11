@@ -8,6 +8,7 @@ void ofApp::setup(){
     ofSetFrameRate(30);
     midiIn.openPort(0);
     midiIn.addListener(this);
+    model.loadModel("hands/RiggedHand.3ds");
 }
 
 void ofApp::exit(){
@@ -26,6 +27,36 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     cam.begin();
+    ofBackground(0, 0, 0, 0);
+    ofSetColor(255, 255, 255, 255);
+    model.setPosition(ofGetWidth()*2/6, (float)ofGetHeight() * 0.75 , 0);
+//    model.draw(OF_MESH_FILL); //same as model.drawFaces();
+//    model.setPosition(ofGetWidth()*3/6, (float)ofGetHeight() * 0.75 , 0);
+//    model.draw(OF_MESH_POINTS); // same as model.drawVertices();
+//    model.setPosition(ofGetWidth()*4/6, (float)ofGetHeight() * 0.75 , 0);
+//    model.draw(OF_MESH_WIREFRAME); // same as model.drawWireframe();
+//
+//    model.getMesh(0).drawWireframe();
+//    model.getMesh(1).drawWireframe();
+//    model.drawWireframe();
+    
+//    model.getMesh(0).set;
+    auto mesh = model.getCurrentAnimatedMesh(0);
+    
+    ofxAssimpMeshHelper & meshHelper = model.getMeshHelper(0);
+
+    ofMultMatrix(model.getModelMatrix());
+    ofMultMatrix(meshHelper.matrix);
+
+    ofMaterial & material = meshHelper.material;
+    if(meshHelper.hasTexture()){
+        meshHelper.getTextureRef().bind();
+    }
+    material.begin();
+    mesh.drawFaces();
+    material.end();
+
+    
     cam.end();
     
     // capture the image if recording is started

@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxMidi.h"
 #include "ofxImageSequenceRecorder.h"
+#include "ofxAssimpModelLoader.h"
 
 class ofApp : public ofBaseApp, public ofxMidiListener {
     
@@ -44,4 +45,7 @@ private:
     ofxImageSequenceRecorder recorder;
     Boolean recording;
     ofImage screenCapture;
+    
+    // models
+    ofxAssimpModelLoader model;
 };
